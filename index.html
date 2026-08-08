@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBRA | ابرا</title>
+<link rel="icon" type="image/webp" href="https://files.kick.com/images/user/1120744/profile_image/conversion/a86dc276-5226-4cae-89a3-bd7c3389f7f2-fullsize.webp">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Cairo', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        width: 100%;
+        min-height: 100vh;
+        background-color: #050816;
+        color: #fff;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        padding: 30px 16px 30px;
+        position: relative;
+    }
+
+    #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* subtle radial glow behind everything */
+    body::before {
+        content: '';
+        position: fixed;
+        top: -10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(5,8,22,0) 70%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .page {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 760px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ===== Profile header ===== */
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .avatar-ring {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        padding: 4px;
+        background: linear-gradient(135deg, #0612b9, #086aea, #3b82f6);
+        box-shadow: 0 0 30px rgba(8, 106, 234, 0.5);
+        margin-bottom: 18px;
+        position: relative;
+        animation: pulseGlow 3.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 0 25px rgba(8, 106, 234, 0.4); }
+        50% { box-shadow: 0 0 42px rgba(59, 130, 246, 0.65); }
+    }
+
+    .avatar-ring img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        background: #111827;
+        border: 3px solid #050816;
+    }
+
+    .profile-name {
+        font-size: 2rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #ffffff, #c3dafe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    /* ===== Links list ===== */
+    .links-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-bottom: 36px;
+    }
+
+    .link-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        text-decoration: none;
+        color: #fff;
+        background: rgba(10, 17, 40, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 18px 22px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        overflow: hidden;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .link-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(59,130,246,0.12), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
+    }
+
+    .link-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.4);
+        box-shadow: 0 12px 28px rgba(59, 130, 246, 0.18);
+    }
+
+    .link-card:hover::before { opacity: 1; }
+
+    .link-icon {
+        flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .link-icon img { width: 24px; height: 24px; object-fit: contain; }
+    .link-icon svg { width: 22px; height: 22px; }
+
+    .link-body {
+        flex-grow: 1;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+        text-align: right;
+    }
+
+    .link-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .link-sub {
+        font-size: 0.82rem;
+        color: #929dae;
+        direction: ltr;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .link-arrow {
+        flex-shrink: 0;
+        color: #eab308;
+        font-size: 1.3rem;
+        font-weight: 900;
+        opacity: 0;
+        transform: translateX(8px);
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .link-card:hover .link-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* platform tints */
+    .link-card.discord .link-icon { background: rgba(88, 101, 242, 0.15); color: #5865f2; border: 1px solid rgba(88, 101, 242, 0.4); }
+    .link-card.youtube .link-icon { background: rgba(255, 0, 0, 0.12); color: #ff0000; border: 1px solid rgba(255, 0, 0, 0.35); }
+    .link-card.kick .link-icon { background: rgba(83, 252, 24, 0.15); border: 1px solid rgba(83, 252, 24, 0.45); }
+    .link-card.tiktok .link-icon { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.3); }
+    .link-card.twitch .link-icon { background: rgba(145, 70, 255, 0.15); color: #9146ff; border: 1px solid rgba(145, 70, 255, 0.4); }
+    .link-card.twitter .link-icon { background: rgba(29, 161, 242, 0.12); color: #1da1f2; border: 1px solid rgba(29, 161, 242, 0.35); }
+    .link-card.instagram .link-icon { background: rgba(225, 48, 108, 0.12); color: #e1306c; border: 1px solid rgba(225, 48, 108, 0.35); }
+
+    /* ===== Socials row ===== */
+    .socials-row {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .social-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #929dae;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon svg { width: 21px; height: 21px; }
+    .social-icon img { width: 21px; height: 21px; object-fit: contain; }
+
+    .social-icon:hover {
+        transform: translateY(-4px) scale(1.08);
+        color: #fff;
+    }
+
+    .social-icon.instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: transparent; box-shadow: 0 0 15px rgba(225,48,108,0.5); }
+    .social-icon.tiktok:hover { background: linear-gradient(45deg, #fe2c55, #25f4ee); border-color: transparent; box-shadow: 0 0 15px rgba(37,244,238,0.5); }
+    .social-icon.twitter:hover { background: #1da1f2; border-color: #1da1f2; box-shadow: 0 0 15px rgba(29,161,242,0.5); }
+    .social-icon.twitch:hover { background: #9146ff; border-color: #9146ff; box-shadow: 0 0 15px rgba(145,70,255,0.5); }
+    .social-icon.discord:hover { background: #5865f2; border-color: #5865f2; box-shadow: 0 0 15px rgba(88,101,242,0.5); }
+    .social-icon.kick:hover { background: #53fc18; border-color: #53fc18; box-shadow: 0 0 15px rgba(83,252,24,0.5); }
+
+    /* ===== Footer ===== */
+    .page-footer {
+        text-align: center;
+        color: #5b6577;
+        font-size: 0.78rem;
+        line-height: 1.9;
+    }
+
+    .page-footer a { color: #7c8698; text-decoration: none; }
+    .page-footer a:hover { color: #eab308; }
+
+    .footer-divider {
+        margin: 0 6px;
+        opacity: 0.4;
+    }
+
+    @media (max-width: 420px) {
+        .links-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+        .profile-name { font-size: 1.6rem; }
+        .avatar-ring { width: 100px; height: 100px; }
+        .link-card { padding: 14px 16px; }
+    }
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="page">
+
+    <div class="profile-header">
+        <div class="avatar-ring">
+            <!-- حط صورتك الشخصية مكان هذا المسار -->
+            <img src="/images/avatar.png" alt="IBRA">
+        </div>
+        <div class="profile-name">IBRA | ابرا</div>
+    </div>
+
+    <div class="links-list">
+
+        <a href="https://discord.gg/hJFbVWhjnK" target="_blank" class="link-card discord">
+            <div class="link-icon">
+                <svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5c.88-.65,1.72-1.34,2.51-2a75.58,75.58,0,0,0,73,0c.79.71,1.63,1.4,2.51,2a68.43,68.43,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31.06-18.83C129,54.65,122.64,31.58,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">ديسكورد</div>
+                <div class="link-sub">Discord Server • Free to join</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://youtube.com/@ibralive3" target="_blank" class="link-card youtube">
+            <div class="link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">يوتيوب</div>
+                <div class="link-sub">@ibralive3</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://kick.com/ibrahimlive" target="_blank" class="link-card kick">
+            <div class="link-icon">
+                <!-- حط صورة/شعار كيك مكان هذا المسار -->
+                <img src="/images/4.png" alt="Kick">
+            </div>
+            <div class="link-body">
+                <div class="link-title">كيك</div>
+                <div class="link-sub">kick.com/ibrahimlive</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://tiktok.com/@ibrahimlive33" target="_blank" class="link-card tiktok">
+            <div class="link-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.92-1.88 2.63-5.31 3.71-8.31 2.94-2.73-.67-4.92-2.88-5.54-5.63-.74-3.22.75-6.79 3.69-8.15 1.57-.73 3.39-.88 5.08-.47v4.19c-1.07-.32-2.24-.13-3.14.51-1.25.86-1.74 2.63-1.07 4.02.68 1.43 2.41 2.21 3.94 1.83 1.34-.32 2.37-1.54 2.48-2.92.04-4.26.02-8.52.03-12.79l-.02-.45z"/></svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">تيك توك</div>
+                <div class="link-sub">@ibrahimlive33</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://twitch.tv/ibrahimlive" target="_blank" class="link-card twitch">
+            <div class="link-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0h1.714v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">تويتش</div>
+                <div class="link-sub">Twitch • ibrahimlive</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://x.com/ibrahimlive33" target="_blank" class="link-card twitter">
+            <div class="link-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">إكس (تويتر)</div>
+                <div class="link-sub">@ibrahimlive33</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+        <a href="https://instagram.com/ib_yts" target="_blank" class="link-card instagram">
+            <div class="link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </div>
+            <div class="link-body">
+                <div class="link-title">انستقرام</div>
+                <div class="link-sub">IBRA | ابرا (@ib_yts)</div>
+            </div>
+            <span class="link-arrow">←</span>
+        </a>
+
+    </div>
+
+    <div class="socials-row">
+        <a href="https://instagram.com/ib_yts" target="_blank" class="social-icon instagram" title="انستقرام">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="https://tiktok.com/@ibrahimlive33" target="_blank" class="social-icon tiktok" title="تيك توك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.92-1.88 2.63-5.31 3.71-8.31 2.94-2.73-.67-4.92-2.88-5.54-5.63-.74-3.22.75-6.79 3.69-8.15 1.57-.73 3.39-.88 5.08-.47v4.19c-1.07-.32-2.24-.13-3.14.51-1.25.86-1.74 2.63-1.07 4.02.68 1.43 2.41 2.21 3.94 1.83 1.34-.32 2.37-1.54 2.48-2.92.04-4.26.02-8.52.03-12.79l-.02-.45z"/></svg>
+        </a>
+        <a href="https://x.com/ibrahimlive33" target="_blank" class="social-icon twitter" title="إكس">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://twitch.tv/ibrahimlive" target="_blank" class="social-icon twitch" title="تويتش">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0h1.714v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+        </a>
+        <a href="https://discord.gg/hJFbVWhjnK" target="_blank" class="social-icon discord" title="ديسكورد">
+            <svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5c.88-.65,1.72-1.34,2.51-2a75.58,75.58,0,0,0,73,0c.79.71,1.63,1.4,2.51,2a68.43,68.43,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31.06-18.83C129,54.65,122.64,31.58,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+        </a>
+        <a href="https://kick.com/ibrahimlive" target="_blank" class="social-icon kick" title="كيك">
+            <!-- حط صورة/شعار كيك مكان هذا المسار -->
+            <img src="/images/4.png" alt="Kick">
+        </a>
+    </div>
+
+    <div class="page-footer">
+        جميع الحقوق محفوظة &copy; 2026 — زلف
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#ffffff" },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+            "size": { "value": 3, "random": true, "anim": { "enable": false } },
+            "line_linked": { "enable": true, "distance": 150, "color": "#3b82f6", "opacity": 0.15, "width": 1 },
+            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": { "enable": true, "mode": "bubble" },
+                "onclick": { "enable": true, "mode": "push" },
+                "resize": true
+            },
+            "modes": {
+                "bubble": { "distance": 200, "size": 6, "duration": 2, "opacity": 0.8, "speed": 3 },
+                "push": { "particles_nb": 4 }
+            }
+        },
+        "retina_detect": true
+    });
+</script>
+
+</body>
+</html>
